@@ -22,11 +22,20 @@
         outEl.textContent = "loading...";
 
         try {
-          const res = await fetch("/api/qna");
+          const res = await fetch("/api/qna/similarity", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text }),
+          });
           const data = await res.json();
 
           outEl.textContent =
-            "입력한 질문: " + text + "\n\n" + JSON.stringify(data, null, 2);
+            "입력한 질문: " +
+            data.text +
+            "\n\n" +
+            data.matches
+              .map((m) => m.score.toFixed(3) + " | " + m.question)
+              .join("\n");
         } catch (e) {
           outEl.textContent = String(e);
         }
