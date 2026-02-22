@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>QnA Test</title>
+  </head>
+  <body>
+    <input id="text" placeholder="질문 입력" />
+    <button id="send">전송</button>
+    <pre id="out"></pre>
+
+    <script>
+      const textEl = document.getElementById("text");
+      const outEl = document.getElementById("out");
+      const sendBtn = document.getElementById("send");
+
+      sendBtn.addEventListener("click", async () => {
+        const text = textEl.value.trim();
+        if (!text) return;
+
+        outEl.textContent = "loading...";
+
+        try {
+          const res = await fetch("/api/qna");
+          const data = await res.json();
+
+          outEl.textContent =
+            "입력한 질문: " + text + "\n\n" + JSON.stringify(data, null, 2);
+        } catch (e) {
+          outEl.textContent = String(e);
+        }
+      });
+    </script>
+  </body>
+</html>
