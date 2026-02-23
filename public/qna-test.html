@@ -35,7 +35,14 @@
             "\n\n" +
             data.matches
               .map((m) => m.score.toFixed(3) + " | " + m.question)
-              .join("\n");
+              .join("\n") +
+            "\n\n" +
+            (data.best
+              ? "가장 유사한 질문: " +
+                data.best.score.toFixed(3) +
+                " | " +
+                data.best.question
+              : "가장 유사한 질문: 없음");
         } catch (e) {
           outEl.textContent = String(e);
         }

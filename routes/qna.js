@@ -44,7 +44,23 @@ router.post("/api/qna/similarity", async (req, res) => {
     });
   }
 
-  res.json({ ok: true, text, count: matches.length, matches });
+  let best = matches[0];
+  for (let i = 1; i < matches.length; i++) {
+    if (matches[i].score > best.score) best = matches[i];
+  }
+
+  if (!best || best.score === 0) {
+    return res.json({
+      ok: true,
+      text,
+      count: matches.length,
+      matches,
+      best: null,
+      message: "유사한 질문이 없습니다.",
+    });
+  }
+
+  res.json({ ok: true, text, count: matches.length, matches, best });
 });
 
 module.exports = router;
