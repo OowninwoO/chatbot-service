@@ -49,18 +49,16 @@ router.post("/api/qna/similarity", async (req, res) => {
     if (matches[i].score > best.score) best = matches[i];
   }
 
-  if (!best || best.score === 0) {
-    return res.json({
-      ok: true,
-      text,
-      count: matches.length,
-      matches,
-      best: null,
-      message: "유사한 질문이 없습니다.",
-    });
-  }
+  const bestOrNull = best.score === 0 ? null : best;
 
-  res.json({ ok: true, text, count: matches.length, matches, best });
+  res.json({
+    ok: true,
+    text,
+    count: matches.length,
+    matches,
+    best: bestOrNull,
+    message: bestOrNull ? null : "유사한 질문이 없습니다.",
+  });
 });
 
 module.exports = router;
