@@ -58,7 +58,7 @@ router.post("/api/qna/similarity", async (req, res) => {
     matches,
     best: bestOrNull,
     message: bestOrNull
-      ? `가장 유사한 질문: ${bestOrNull.score.toFixed(3)} | ${bestOrNull.question}`
+      ? `가장 유사한 질문: ${bestOrNull.score.toFixed(3)} | ${bestOrNull.question}\n\n응답: ${bestOrNull.answer}`
       : "유사한 질문이 없습니다.",
   });
 });
