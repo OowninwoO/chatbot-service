@@ -25,6 +25,7 @@ async function loadQnaFromXlsx(filePath) {
 router.get("/api/qna", async (req, res) => {
   const filePath = process.env.QNA_XLSX_PATH;
   const qna = await loadQnaFromXlsx(filePath);
+
   res.json({ ok: true, count: qna.length, qna });
 });
 
@@ -57,9 +58,7 @@ router.post("/api/qna/similarity", async (req, res) => {
     count: matches.length,
     matches,
     best: bestOrNull,
-    message: bestOrNull
-      ? `가장 유사한 질문: ${bestOrNull.score.toFixed(3)} | ${bestOrNull.question}\n\n응답: ${bestOrNull.answer}`
-      : "유사한 질문이 없습니다.",
+    message: bestOrNull ? "유사한 질문을 찾았습니다." : "유사한 질문이 없습니다.",
   });
 });
 

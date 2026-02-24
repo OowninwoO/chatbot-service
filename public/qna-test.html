@@ -29,15 +29,7 @@
           });
           const data = await res.json();
 
-          outEl.textContent =
-            "입력한 질문: " +
-            data.text +
-            "\n\n" +
-            data.matches
-              .map((m) => m.score.toFixed(3) + " | " + m.question)
-              .join("\n") +
-            "\n\n" +
-            data.message;
+          outEl.textContent = JSON.stringify(data, null, 2);
         } catch (e) {
           outEl.textContent = String(e);
         }
