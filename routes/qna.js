@@ -41,7 +41,7 @@ router.post("/api/qna/similarity", async (req, res) => {
     matches.push({
       question: item.question,
       answer: item.answer,
-      score: stringSimilarity.compareTwoStrings(text, item.question),
+      score: Number(stringSimilarity.compareTwoStrings(text, item.question).toFixed(3)),
     });
   }
 
