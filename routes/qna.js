@@ -50,7 +50,7 @@ router.post("/api/qna/similarity", async (req, res) => {
     if (matches[i].score > best.score) best = matches[i];
   }
 
-  const bestOrNull = best.score === 0 ? null : best;
+  const bestOrNull = best.score >= 0.5 ? best : null;
 
   res.json({
     ok: true,
@@ -58,7 +58,7 @@ router.post("/api/qna/similarity", async (req, res) => {
     count: matches.length,
     matches,
     best: bestOrNull,
-    message: bestOrNull ? "유사한 질문을 찾았습니다." : "유사한 질문이 없습니다.",
+    message: bestOrNull ? "유사한 질문을 찾았습니다." : "유사도가 낮아 RAG로 넘어가야 합니다. (RAG 미구현)",
   });
 });
 
