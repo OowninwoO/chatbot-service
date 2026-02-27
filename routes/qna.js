@@ -48,18 +48,26 @@ router.post("/api/qna/similarity", async (req, res) => {
     });
   }
 
-  let best = matches[0];
+  let matchedExcel = matches[0];
   for (let i = 1; i < matches.length; i++) {
-    if (matches[i].score > best.score) best = matches[i];
+    if (matches[i].score > matchedExcel.score) matchedExcel = matches[i];
   }
 
   let data;
 
-  if (best.score >= 0.5) {
-    data = best;
+  if (matchedExcel.score >= 0.5) {
+    data = {
+      source: "xlsx",
+      result: matchedExcel,
+    };
   } else {
     const chunks = await loadDocChunks();
-    data = { chunks };
+    data = {
+      source: "document",
+      result: {
+        chunks,
+      },
+    };
   }
 
   res.json({
