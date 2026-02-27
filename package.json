@@ -12,6 +12,7 @@
   "dependencies": {
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
+    "langchain": "^1.2.28",
     "read-excel-file": "^6.0.3",
     "string-similarity": "^4.0.4"
   }
