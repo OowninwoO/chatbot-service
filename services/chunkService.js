@@ -1,4 +1,4 @@
-const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
+const { RecursiveCharacterTextSplitter } = require("@langchain/textsplitters");
 
 async function splitText(text) {
   const splitter = new RecursiveCharacterTextSplitter({
