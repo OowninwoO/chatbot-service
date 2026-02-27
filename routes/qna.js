@@ -73,8 +73,6 @@ router.post("/api/qna/similarity", async (req, res) => {
   res.json({
     ok: true,
     text,
-    count: matches.length,
-    matches,
     data,
   });
 });
