@@ -1,6 +1,7 @@
 const express = require("express");
 const readXlsxFile = require("read-excel-file/node");
 const stringSimilarity = require("string-similarity");
+const { loadDocChunks } = require("../services/docService");
 
 const router = express.Router();
 
@@ -41,7 +42,9 @@ router.post("/api/qna/similarity", async (req, res) => {
     matches.push({
       question: item.question,
       answer: item.answer,
-      score: Number(stringSimilarity.compareTwoStrings(text, item.question).toFixed(3)),
+      score: Number(
+        stringSimilarity.compareTwoStrings(text, item.question).toFixed(3)
+      ),
     });
   }
 
@@ -50,15 +53,21 @@ router.post("/api/qna/similarity", async (req, res) => {
     if (matches[i].score > best.score) best = matches[i];
   }
 
-  const bestOrNull = best.score >= 0.5 ? best : null;
+  let data;
+
+  if (best.score >= 0.5) {
+    data = best;
+  } else {
+    const chunks = await loadDocChunks();
+    data = { chunks };
+  }
 
   res.json({
     ok: true,
     text,
     count: matches.length,
     matches,
-    best: bestOrNull,
-    message: bestOrNull ? "유사한 질문을 찾았습니다." : "유사도가 낮아 RAG로 넘어가야 합니다. (RAG 미구현)",
+    data,
   });
 });
 
