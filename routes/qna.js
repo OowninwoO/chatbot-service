@@ -2,6 +2,7 @@ const express = require("express");
 const readXlsxFile = require("read-excel-file/node");
 const stringSimilarity = require("string-similarity");
 const { loadDocChunks } = require("../services/docService");
+const { answerWithChunks } = require("../services/openaiService");
 
 const router = express.Router();
 
@@ -62,11 +63,11 @@ router.post("/api/qna/similarity", async (req, res) => {
     };
   } else {
     const chunks = await loadDocChunks();
+    const answer = await answerWithChunks({ text, chunks });
+
     data = {
       source: "document",
-      result: {
-        chunks,
-      },
+      result: answer,
     };
   }
 
