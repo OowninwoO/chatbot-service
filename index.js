@@ -1,13 +1,13 @@
 require("dotenv").config();
 
 const express = require("express");
-const qnaRoutes = require("./routes/qna");
+const qnasRoutes = require("./routes/qnas");
 
 const app = express();
 app.use(express.json());
 app.use(express.static("public"));
 
-app.use(qnaRoutes);
+app.use(qnasRoutes);
 
 const port = Number(process.env.PORT);
 

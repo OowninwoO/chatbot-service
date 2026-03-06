@@ -24,14 +24,14 @@ async function loadQnaFromXlsx(filePath) {
   return result;
 }
 
-router.get("/api/qna", async (req, res) => {
+router.get("/api/qnas", async (req, res) => {
   const filePath = process.env.QNA_XLSX_PATH;
   const qna = await loadQnaFromXlsx(filePath);
 
   res.json({ ok: true, count: qna.length, qna });
 });
 
-router.post("/api/qna/similarity", async (req, res) => {
+router.post("/api/qnas/answer", async (req, res) => {
   const text = String(req.body.text).trim();
 
   const filePath = process.env.QNA_XLSX_PATH;

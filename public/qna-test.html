@@ -22,7 +22,7 @@
         outEl.textContent = "loading...";
 
         try {
-          const res = await fetch("/api/qna/similarity", {
+          const res = await fetch("/api/qnas/answer", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text }),
