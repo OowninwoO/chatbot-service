@@ -58,22 +58,25 @@ router.post("/api/qnas/answer", async (req, res) => {
 
   if (matchedExcel.score >= 0.5) {
     data = {
+      question: text,
+      score: matchedExcel.score,
+      answer: matchedExcel.answer,
       source: "xlsx",
-      result: matchedExcel,
     };
   } else {
     const chunks = await loadDocChunks();
     const answer = await answerWithChunks({ text, chunks });
 
     data = {
+      question: text,
+      score: matchedExcel.score,
+      answer,
       source: "document",
-      result: answer,
     };
   }
 
   res.json({
     ok: true,
-    text,
     data,
   });
 });
